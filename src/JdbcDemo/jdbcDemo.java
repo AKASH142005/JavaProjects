@@ -164,6 +164,7 @@ package JdbcDemo;
             String passWord ="ac14042005";
 
 
+
             String query1 ="update  Employee set Salary = 1000 where emp_no =1 ";
             String query2 ="update Employee set Salary = 1000 where emp_no = 2 ";
             Connection con = DriverManager.getConnection(url,userName,passWord);
