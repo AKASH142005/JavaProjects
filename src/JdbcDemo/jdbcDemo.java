@@ -3,7 +3,7 @@ package JdbcDemo;
     import java.sql.*;
     class JdbcDemo{
         public static void main(String[] args) throws SQLException {
-            spIn();
+            commitDemo();
         }
     public static void readRecord() throws SQLException {
         String url ="jdbc:mysql://localhost:3306/jdbcDemo";
@@ -156,6 +156,28 @@ package JdbcDemo;
             cst.executeUpdate();
             System.out.print(cst.getString(2));
 
+            con.close();
+        }
+        public static void commitDemo()throws SQLException{
+            String url ="jdbc:mysql://localhost:3306/jdbcDemo";
+            String userName = "root";
+            String passWord ="ac14042005";
+
+
+            String query1 ="update  Employee set Salary = 1000 where emp_no =1 ";
+            String query2 ="update Employee set Salary = 1000 where emp_no = 2 ";
+            Connection con = DriverManager.getConnection(url,userName,passWord);
+            Statement st = con.createStatement();
+            con.setAutoCommit(false);
+
+
+            int row1 = st.executeUpdate(query1);
+            int row2 = st.executeUpdate(query2);
+
+            if(row1 > 0 && row2 >0){
+                con.commit();
+            }
+            System.out.print(row1);
             con.close();
         }
 
