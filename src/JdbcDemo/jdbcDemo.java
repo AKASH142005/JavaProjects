@@ -3,9 +3,7 @@ package JdbcDemo;
     import java.sql.*;
     class JdbcDemo{
         public static void main(String[] args) throws SQLException {
-            insertRecords();
-            readRecord();
-
+            spIn();
         }
     public static void readRecord() throws SQLException {
         String url ="jdbc:mysql://localhost:3306/jdbcDemo";
@@ -49,14 +47,117 @@ package JdbcDemo;
             String name = "varun";
             int salary = 50000;
             String query ="insert into Employee values(" +id+ ",'" +name+"'," +salary+ ");";
-
+            System.out.println(query);
             //Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection(url,userName,passWord);
             Statement st = con.createStatement();
             int rows = st.executeUpdate(query);
             System.out.println(rows);
             con.close();
+        }
+
+        public static void insertPreparedStatement() throws SQLException {
+            String url ="jdbc:mysql://localhost:3306/jdbcDemo";
+            String userName = "root";
+            String passWord ="ac14042005";
+
+            int id = 8;
+            String name ="Arun";
+            int salary =40000;
+            String query ="INSERT INTO Employee VALUES(?,?,?) ";
+            Connection con = DriverManager.getConnection(url,userName,passWord);
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setInt(1,id);
+            pst.setString(2,name);
+            pst.setInt(3,salary);
+
+            int rows = pst.executeUpdate();
+            System.out.print(rows);
+            con.close();
 
         }
+        public static void update() throws SQLException {
+            String url ="jdbc:mysql://localhost/jdbcDemo";
+            String userName ="root";
+            String passWord ="ac14042005";
+
+            int salary =10000;
+            int id =2;
+
+            String query="UPDATE Employee set salary = "+salary+" where emp_no = "+ id ;
+            System.out.println(query);
+
+            Connection con = DriverManager.getConnection(url,userName,passWord);
+            Statement st = con.createStatement();
+            int rows = st.executeUpdate(query);
+            System.out.println(rows);
+            con.close();
+        }
+        public static void delete() throws SQLException{
+            String url ="jdbc:mysql://localhost:3306/jdbcDemo";
+            String userName ="root";
+            String passWord ="ac14042005";
+
+            int id = 5;
+
+            String query ="delete from Employee where emp_no = ?;";
+            Connection con = DriverManager.getConnection(url,userName,passWord);
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setInt(1,id);
+            int rows = pst.executeUpdate();
+            System.out.println(rows);
+            con.close();
+        }
+
+        public static void sp() throws SQLException {
+            String url ="jdbc:mysql://localhost:3306/jdbcDemo";
+            String userName ="root";
+            String passWord ="ac14042005";
+
+            Connection con =DriverManager.getConnection(url,userName,passWord);
+            CallableStatement cst =con.prepareCall("{Call GetEmp()}");
+            ResultSet rs = cst.executeQuery();
+
+            while (rs.next()){
+                System.out.print("ID  : " + rs.getInt( 1));
+                System.out.print(" Name " +rs.getString( 2));
+                System.out.println(" Salary : " + rs.getInt( + 3));
+            }
+            con.close();
+        }
+        public static void spIn() throws SQLException{
+            String url = "jdbc:mysql://localhost:3306/jdbcDemo";
+            String userName ="root";
+            String passWord ="ac14042005";
+
+            int id = 2;
+
+            Connection con = DriverManager.getConnection(url,userName,passWord);
+            CallableStatement cst = con.prepareCall("{Call GetDetails(?)}");
+            cst.setInt(1,id);
+            ResultSet rs = cst.executeQuery();
+
+            rs.next();
+            System.out.print("ID : "+ rs.getString(1));
+            System.out.print(" Name : "+ rs.getString(2));
+            System.out.print(" Salary : " + rs.getString(3));
+            con.close();
+        }
+        public static void spInOut() throws SQLException{
+            String url = "jdbc:mysql://localhost:3306/jdbcDemo";;
+            String userName ="root";
+            String passWord ="ac14042005";
+
+            int id = 2 ;
+            Connection con = DriverManager.getConnection(url,userName ,passWord);
+            CallableStatement cst = con.prepareCall("{Call GetNameBy(?,?)}");
+            cst.setInt(1,id);
+            cst.registerOutParameter(2,Types.VARCHAR);
+            cst.executeUpdate();
+            System.out.print(cst.getString(2));
+
+            con.close();
+        }
+
     }
 
