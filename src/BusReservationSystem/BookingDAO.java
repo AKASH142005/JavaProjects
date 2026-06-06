@@ -4,7 +4,7 @@ import java.util.Date;
 import java.sql.*;
 
 
-public class BookingDAO {
+public class BookingDAO  {
     public static int getBookedCount(int id ,Date date) throws SQLException {
         Connection con = DBConnection.getConnection();
         String query = "SELECT count(passenger_name) from booking where bus_no =? and travel_date = ?";
