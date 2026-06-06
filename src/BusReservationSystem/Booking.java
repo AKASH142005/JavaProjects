@@ -8,7 +8,7 @@ public class Booking {
     int busNo ;
     Date date ;
 
-    Booking() throws ParseException {
+    public Booking() throws ParseException {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter name of passenger : ");
         passengerName = sc.next() ;
