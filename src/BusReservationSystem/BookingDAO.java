@@ -23,7 +23,7 @@ public class BookingDAO  {
         PreparedStatement pst = con.prepareStatement(query);
         pst.setString(1, booking.passengerName);
         pst.setInt(2,booking.busNo);
-
+        // sql and java data problem
         java.sql.Date sqlDate = new java.sql.Date(booking.date.getTime());
         pst.setDate(3 ,sqlDate);
         pst.executeUpdate();
