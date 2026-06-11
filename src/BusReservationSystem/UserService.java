@@ -4,6 +4,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 
 public class UserService {
     public boolean insertUser(User newUser) throws SQLException {
+        // handle error
         UserDAO userDAO = new UserDAO();
         try{
             userDAO.insert(newUser);
