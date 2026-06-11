@@ -2,7 +2,6 @@ package BusReservationSystem;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Scanner;
-import java.util.ArrayList ;
 public class BusDemo {
     public static void main(String[] args) throws ParseException, SQLException {
         BusDAO busDAO = new BusDAO();
@@ -10,6 +9,7 @@ public class BusDemo {
         String username ;
         String password ;
         int userOption = 1;
+        // add the user module
         while (userOption == 1 || userOption == 2) {
             System.out.println("Welcome to Bus Booking \n 1. Sign Up \n 2. Login In \n 3.Exist");
             Scanner input = new Scanner(System.in);
