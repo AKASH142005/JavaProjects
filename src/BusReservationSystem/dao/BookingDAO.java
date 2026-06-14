@@ -1,4 +1,7 @@
-package BusReservationSystem;
+package BusReservationSystem.dao;
+
+import BusReservationSystem.model.Booking;
+import BusReservationSystem.DBConnection;
 
 import java.util.Date;
 import java.sql.*;
@@ -21,10 +24,10 @@ public class BookingDAO  {
         Connection con = DBConnection.getConnection();
         String query = "Insert into Booking values(?,?,?)";
         PreparedStatement pst = con.prepareStatement(query);
-        pst.setString(1, booking.passengerName);
-        pst.setInt(2,booking.busNo);
+        pst.setString(1, booking.getPassengerName());
+        pst.setInt(2,booking.getBusNo());
         // sql and java data problem
-        java.sql.Date sqlDate = new java.sql.Date(booking.date.getTime());
+        java.sql.Date sqlDate = new java.sql.Date(booking.getDate().getTime());
         pst.setDate(3 ,sqlDate);
         pst.executeUpdate();
     }
