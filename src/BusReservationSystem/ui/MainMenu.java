@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class MainMenu {
     private final UserService userService = new UserService();
     private final Scanner input = new Scanner(System.in) ;
-    public void start() throws ParseException, SQLException {
+    public void start() throws Exception {
         while (true) {
             System.out.println("Welcome to Bus Booking \n 1. Sign Up \n 2. Login In \n 3.Exist");
             Scanner input = new Scanner(System.in);
@@ -57,7 +57,7 @@ public class MainMenu {
             System.out.println("user Already exist");
         }
     }
-    private void handleLogin() throws SQLException, ParseException {
+    private void handleLogin() throws Exception {
         UserDAO userDAO = new UserDAO();
         System.out.print("Enter username : ");
         String username = input.nextLine().trim();
@@ -74,7 +74,7 @@ public class MainMenu {
         }
     }
 
-    private void redirectUserMenu(User user) throws SQLException, ParseException {
+    private void redirectUserMenu(User user) throws Exception {
         AdminMenu admin = new AdminMenu();
         CustomerMenu customer = new CustomerMenu() ;
         if("ADMIN".equalsIgnoreCase(user.getRole())){
