@@ -32,6 +32,13 @@ public class UserDAO {
               ResultSet rs = pst.executeQuery();
               if(rs.next()){
                   User user = new User();
+                  user.setUsername(rs.getString("username"));
+                  user.setPassword(rs.getString("password_hash"));
+                  user.setFullName(rs.getString("full_name"));
+                  user.setEmail(rs.getString("email"));
+                  user.setRole(rs.getString("role"));
+                  user.setPhoneNum(rs.getLong("phone"));
+                  return user ;
               }
         } catch ( SQLException e){
             System.out.print("DataBase Error : " + e.getMessage());
