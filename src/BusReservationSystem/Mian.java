@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 
 public class Mian {
-   public static void main() throws SQLException, ParseException {
+   public static void main() throws Exception {
         MainMenu menu = new MainMenu();
         menu.start() ;
     }
