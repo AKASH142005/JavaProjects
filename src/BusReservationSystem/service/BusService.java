@@ -12,7 +12,7 @@ public class BusService {
         this.busDAO = busDAO;
     }
     public BusService(){
-
+        this.busDAO = new BusDAO();
     }
 
     public boolean addBus(Bus bus) throws Exception {
@@ -31,6 +31,7 @@ public class BusService {
     return busDAO.insertBus(bus);
     }
     public List<Bus> ListAllBus() throws Exception{
+
         return busDAO.displayAllBusDetails() ;
     }
 
