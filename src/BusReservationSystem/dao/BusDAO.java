@@ -52,7 +52,7 @@ public class BusDAO {
 
     public List<Bus> displayAllBusDetails() throws SQLException {
         List <Bus> buses = new ArrayList<>() ;
-        String query = "Select * from Bus";
+        String query = "Select * from buses";
         try (
         Connection con = DBConnection.getConnection();
         Statement st = con.createStatement();){
