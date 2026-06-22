@@ -5,41 +5,38 @@ import BusReservationSystem.model.Bus;
 import BusReservationSystem.model.User;
 import BusReservationSystem.service.BusService;
 
-import java.lang.classfile.instruction.SwitchCase;
+import java.util.List;
 import java.util.Scanner;
 
 public class AdminMenu {
     static Scanner input = new Scanner(System.in);
     BusDAO busDAO = new BusDAO();
     BusService busService = new BusService(busDAO);
-
     public void showAdminMenu(User user) throws Exception {
-        AdminMenu admin= new AdminMenu();
-        BusService busService = new BusService();
-
-
+        System.out.println("Welcome to the Admin Page ");
         while (true){
-            System.out.print("Welcome to the Admin Page \n Enter \n 1. Bus Details \n 2. Add/Remove Bus 3. Exit");
+            System.out.print(" Enter \n 1. Bus Details \n 2. Add/Remove Bus \n 3. Exit \n");
             int userOption = input.nextInt();
             switch (userOption){
                 case 1 :
-                    busService.ListAllBus();
+                    allBusList(busService.ListAllBus());
+                    break;
                 case 2 :
                     System.out.print("Enter Your Option \n 1. Add  \n 2. Remove ");
                     int Option = input.nextInt();
                     switch (Option){
                         case 1 :
-                            admin.addBus();
+                            addBus();
                             break;
                         case 2 :
-                            admin.remove();
+                            remove();
                             break;
                         default:
                             System.out.print("Valid Option");
                     }
                     break;
                 case 3:
-                    break ;
+                    return;
                 default:
                     System.out.println("Enter Valid Input");
             }
@@ -64,10 +61,10 @@ public class AdminMenu {
         // Add Bus Flow
         try {
             Bus newBus = new Bus();
-            newBus.setBusNo(12);
-            newBus.setBusName("Akkkkk");
-            newBus.setBusType("AC Sleeper");
-            newBus.setTotalSeat(3);
+            newBus.setBusNo(busNo);
+            newBus.setBusName(busName);
+            newBus.setBusType(String.valueOf(busType));
+            newBus.setTotalSeat(totalSeats);
             boolean success = false;
             try {
                 success = busService.addBus(newBus);
@@ -80,4 +77,9 @@ public class AdminMenu {
         }
     }
     // Inside your Admin Menu loop structure
+    public static void allBusList(List <Bus> buses){
+        for(Bus bus: buses){
+            System.out.println("Bus no :" + bus.getBusNo()+ " Bus Name : "+ bus.getBusName() +" Bus Type : " +bus.getBusType() + " Total Seat : " + bus.getTotalSeat());
+        }
+    }
 }
