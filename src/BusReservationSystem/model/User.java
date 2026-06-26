@@ -8,6 +8,7 @@ public class User {
     private String Email;
     private long phoneNum ;
     private String role ;
+    private String status;
     public User(){
     }
     public String getUsername(){
@@ -31,6 +32,12 @@ public class User {
     public long getPhoneNum(){
         return phoneNum ;
     }
+    public String getStatus(){
+        return status;
+    }
+    public void setId(int id){
+        this.id = id;
+    }
     public void setUsername(String username){
         this.username = username ;
     }
@@ -48,5 +55,8 @@ public class User {
     }
     public void setPhoneNum(long phoneNum){
         this.phoneNum= phoneNum ;
+    }
+    public void setStatus(String status){
+        this.status = status;
     }
 }
