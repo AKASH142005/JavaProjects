@@ -2,12 +2,9 @@ package BusReservationSystem.service;
 import BusReservationSystem.dao.UserDAO;
 import BusReservationSystem.model.User;
 
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
-
 public class UserService {
-    private UserDAO userDAO = new UserDAO() ;
-    public boolean register_User(User newUser) throws SQLException {
+    private final UserDAO userDAO = new UserDAO() ;
+    public boolean register_User(User newUser) {
         // handle error
 
         if(userDAO.getUserByUsername(newUser.getUsername())!= null) {
@@ -20,7 +17,7 @@ public class UserService {
     public User login(String username , String password){
         User user = userDAO.getUserByUsername(username);
 
-        if(user != null && user.getPassword().equals(password)){
+        if(user != null && user.getPassword().equals(password) && "ACTIVE".equalsIgnoreCase(user.getStatus())){
             return user ;
         }
         return null ;

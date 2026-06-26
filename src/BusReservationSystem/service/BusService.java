@@ -6,11 +6,8 @@ import BusReservationSystem.model.Bus;
 import java.util.List;
 
 public class BusService {
-    private BusDAO busDAO ;
+    private final BusDAO busDAO ;
 
-    public BusService(BusDAO busDAO) {
-        this.busDAO = busDAO;
-    }
     public BusService(){
         this.busDAO = new BusDAO();
     }
@@ -35,5 +32,14 @@ public class BusService {
         return busDAO.displayAllBusDetails() ;
     }
 
+    public boolean removeBus(int busNo) throws Exception {
+        if (busNo <= 0) {
+            throw new Exception("Bus number must be greater than 0");
+        }
+        if (busDAO.getBusByBusNum(busNo) == null) {
+            throw new Exception("Bus number " + busNo + " does not exist");
+        }
+        return busDAO.deactivateBus(busNo);
+    }
 
 }
