@@ -25,20 +25,23 @@ public class UserDAO {
     }
 
     public User getUserByUsername(String username){
-        String query ="select*from users where username = ?";
+        String query ="select * from users where username = ?";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement pst = con.prepareStatement(query)){
               pst.setString(1 ,username);
-              ResultSet rs = pst.executeQuery();
-              if(rs.next()){
-                  User user = new User();
-                  user.setUsername(rs.getString("username"));
-                  user.setPassword(rs.getString("password_hash"));
-                  user.setFullName(rs.getString("full_name"));
-                  user.setEmail(rs.getString("email"));
-                  user.setRole(rs.getString("role"));
-                  user.setPhoneNum(rs.getLong("phone"));
-                  return user ;
+              try (ResultSet rs = pst.executeQuery()) {
+                  if(rs.next()){
+                      User user = new User();
+                      user.setId(rs.getInt("id"));
+                      user.setUsername(rs.getString("username"));
+                      user.setPassword(rs.getString("password_hash"));
+                      user.setFullName(rs.getString("full_name"));
+                      user.setEmail(rs.getString("email"));
+                      user.setRole(rs.getString("role"));
+                      user.setPhoneNum(rs.getLong("phone"));
+                      user.setStatus(rs.getString("status"));
+                      return user ;
+                  }
               }
         } catch ( SQLException e){
             System.out.print("DataBase Error : " + e.getMessage());

@@ -9,14 +9,15 @@ import java.util.List;
 
 public class BusDAO {
     public boolean insertBus(Bus bus) throws SQLException {
-        Connection con = DBConnection.getConnection();
         String query = "INSERT INTO buses (bus_number, bus_name, bus_type, total_seats) VALUES ( ?, ?, ?, ?)";
-        PreparedStatement pst = con.prepareStatement(query);
-        pst.setInt(1,bus.getBusNo());
-        pst.setString(2,bus.getBusName());
-        pst.setString(3,bus.getBusType());
-        pst.setInt(4,bus.getTotalSeat());
-        return pst.executeUpdate() > 0;
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement pst = con.prepareStatement(query)) {
+            pst.setInt(1,bus.getBusNo());
+            pst.setString(2,bus.getBusName());
+            pst.setString(3,bus.getBusType());
+            pst.setInt(4,bus.getTotalSeat());
+            return pst.executeUpdate() > 0;
+        }
     }
 
     public Bus getBusById(int id ) throws SQLException {
@@ -63,6 +64,16 @@ public class BusDAO {
            }
         }
         return buses ;
+    }
+
+    public boolean deactivateBus(int busNo) throws SQLException {
+        String query = "UPDATE buses SET status = 'INACTIVE' WHERE bus_number = ?";
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement pst = con.prepareStatement(query)) {
+            pst.setInt(1, busNo);
+            return pst.executeUpdate() > 0;
+        }
     }
 
     public Bus mapRowToBus(ResultSet rs) throws SQLException {
